@@ -15,6 +15,7 @@ import Register from './pages/Register'
 import Login from './components/Login'
 import { useSelector } from 'react-redux';
 import Error from './pages/Error'
+import CategoryForm from './admin/CategoryForm'
 
 const App = () => {
 
@@ -31,8 +32,10 @@ const App = () => {
         <Route path='/blog-details' element={<BlogDetail/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
-        <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/>
+        {/* <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/> */}
+        <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/category-form' element={<CategoryForm/>}/>
         
 
 
