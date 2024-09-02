@@ -34,8 +34,10 @@ const CategoryForm = () => {
     }),
     onSubmit: async (values) => {
       console.log(values);
-      const category = await createCategory(values).unwrap()
-      dispatch(setCategory(category))
+      const {categoryCreated} = await createCategory(values).unwrap()
+      console.log(categoryCreated.title,categoryCreated.avatar);
+      
+      dispatch(setCategory({title:categoryCreated.title,avatar:categoryCreated.avatar}))
     },
   });
 

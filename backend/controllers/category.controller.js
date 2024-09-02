@@ -3,9 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 
     
     export const createCategory = async (req, res, next)=> {
-        const category = req.body
-        console.log("Category entered data  ",category);
-        
+        const category = req.body        
         
         try {
             const uploadResult = await cloudinary.uploader
@@ -15,15 +13,15 @@ import { v2 as cloudinary } from "cloudinary";
             .catch((error) => {
               next(error);
             });
-      console.log("After uploadresult");
       
           if (uploadResult) {
             category.avatar = uploadResult.secure_url;
             console.log(category.avatar);
           }
-            await Category.create(category);
+            const categoryCreated = await Category.create(category);
             res.json({
                 message: "category created successfully",
+                categoryCreated
             })
         } catch (error) {
             // next(new Error(error))
