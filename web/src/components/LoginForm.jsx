@@ -1,38 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useLoginUserMutation } from '../redux/api/authApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from '../redux/features/authSlice';
-import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from '../redux/api/authApi';
+
 
 const LoginForm = () => {
 
 
-    const {isAuthenticated} = useSelector(state=>state.auth)
-    const {isAuthenticated} = useSelector(state=>state.auth)
-    const [loginUser, {isLoading, error}] = useLoginUserMutation();
-    const dispatch = useDispatch();
-    const [apiErr, setApiErr] = useState(null);
-    
-    const navigate = useNavigate();
-
-
-    useEffect(() => {
-        if(isAuthenticated){
-            navigate('/')
-        }
-    }, [isAuthenticated])
-
-
-    useEffect(() => {
-        if(isAuthenticated){
-            navigate('/')
-        }
-    }, [isAuthenticated])
+    const [login, {isLoading, error}] = useLoginMutation();
 
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values } = useFormik({
         initialValues: {
@@ -46,22 +22,13 @@ const LoginForm = () => {
 
         }),
         onSubmit: async values => {
-            
-            await loginUser(values)
-            navigate('/')
-            
-            // handleReset();
+            await login(values);
         },
     });
     return (
         <>
             <div className="contact-form spad">
                 <div className="container">
-                {
-                    apiErr && <div class='alert alert-danger' role="alert">
-                        {apiErr && apiErr.message}
-                    </div>
-                }
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="contact__form__title">
@@ -81,7 +48,7 @@ const LoginForm = () => {
                                 <strong className='text-danger mx-2'>{errors.password && touched.password ? errors.password : null}</strong>
                             </div>
                             <div className="col-lg-12 text-center mt-5">
-                                <button type="submit" disabled={isLoading} className="site-btn mb-3">{isLoading ? 'Authenticating..': 'Sign in'}</button> <br />
+                                <button type="submit" className="site-btn mb-3">Sign in</button> <br />
                                 <Link to={'/register'} className='text-primary'>Don't have an Account?</Link>
                             </div>
                         </div>

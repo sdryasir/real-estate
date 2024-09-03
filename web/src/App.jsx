@@ -17,10 +17,12 @@ import { useSelector } from 'react-redux';
 import Error from './pages/Error'
 import AddProduct from './pages/admin/AddProduct'
 import ProtectedRoute from './components/protected/ProtectedRoute'
+import { useGetUserProfileQuery } from './redux/api/authApi'
 
 const App = () => {
 
-  const {isAuthenticated} = useSelector(state=>state.auth)
+  const {isLoading} = useGetUserProfileQuery();
+
 
   const router = createBrowserRouter(
     createRoutesFromElements(

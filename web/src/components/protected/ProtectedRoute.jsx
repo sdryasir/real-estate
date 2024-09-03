@@ -6,13 +6,16 @@ function ProtectedRoute() {
     
     const {isAuthenticated, user} = useSelector(state=>state.auth)
 
+   
+    
+
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     if(!isAuthenticated && user?.user?.roles !== 'admin'){
-    //         return navigate('/login')
-    //     }
-    // })
+    useEffect(()=>{
+        if(isAuthenticated && !isAuthenticated){
+            return navigate('/login')
+        }
+    })
 
   return (
     <Outlet/>

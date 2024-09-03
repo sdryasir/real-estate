@@ -15,6 +15,7 @@ const {actions, reducer} = createSlice({
             state.isAuthenticated = action.payload
         },
         clearUserInfo:(state, action)=>{
+            state.user = null
         }
     }
 })

@@ -53,7 +53,7 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+        }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
 console.log("token", token);
 
@@ -67,7 +67,7 @@ console.log("token", token);
     }
     async logout(req, res, next) {        
         try {
-            res.cookie('auth_token','', { maxAge: 0, httpOnly: true }).json({
+            res.cookie('token','', { maxAge: 0, httpOnly: true }).json({
                 success:true,
                 message:'You are logged out'
             })
