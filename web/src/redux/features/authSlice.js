@@ -23,5 +23,3 @@ const {actions, reducer} = createSlice({
 
 export const  {setUserInfo, clearUserInfo, setIsAuthenticated} = actions
 export default reducer
-
-
