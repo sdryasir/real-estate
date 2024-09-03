@@ -9,9 +9,10 @@ const store = configureStore({
     auth:authReducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([productApi.middleware, authApi.middleware]),
+    getDefaultMiddleware().concat([productApi.middleware, categoryApi.middleware, authApi.middleware]),
 })
 
 export default store

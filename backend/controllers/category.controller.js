@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
     
     export const createCategory = async (req, res, next)=> {
         const category = req.body        
+        console.log(category);
         
         try {
             const uploadResult = await cloudinary.uploader
@@ -30,13 +31,17 @@ import { v2 as cloudinary } from "cloudinary";
     }
     
      export const getAllCategorys = async (req, res, next) => {
+
         try {
-            const category = await Category.find({})
+            const category = await Category.find()
+            console.log("----------", category);
             res.json({
                 message: "getAllCategory called", 
                 category       
             })
         } catch (error) {
+            console.log('*****', error);
+            
             next(error);
         } 
     }
