@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import Error from './pages/Error'
 import AddProduct from './pages/admin/AddProduct'
 import ProtectedRoute from './components/protected/ProtectedRoute'
+import CategoryForm from './admin/CategoryForm'
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/category-form' element={<CategoryForm/>}/>
 
         <Route path='admin' element={<ProtectedRoute/>}>
           <Route path='add-product' element={<AddProduct/>}/>
