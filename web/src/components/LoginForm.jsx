@@ -2,17 +2,16 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useLoginUserMutation } from '../redux/api/authApi';
+import { useLoginMutation } from '../redux/api/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setUserInfo } from '../redux/features/authSlice';
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
 
     const {isAuthenticated} = useSelector(state=>state.auth)
-    const [loginUser, {isLoading, error}] = useLoginUserMutation();
+    const [login, {isLoading, error}] = useLoginMutation();
     const dispatch = useDispatch();
     const [apiErr, setApiErr] = useState(null);
     

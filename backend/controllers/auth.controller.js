@@ -53,12 +53,10 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-console.log("token", token);
+        }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
         try {
-            res.cookie('token',token, { maxAge: 900000, httpOnly: true }).json({
+            res.cookie('token',token, { maxAge: 9000000, httpOnly: true }).json({
                 token,
             })
         } catch (error) {

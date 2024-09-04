@@ -16,13 +16,17 @@ import Login from './components/Login'
 import { useSelector } from 'react-redux';
 import Error from './pages/Error'
 import AddProduct from './pages/admin/AddProduct'
-import ProtectedRoute from './components/protected/ProtectedRoute'
+import AdminRoute from './components/protected/AdminRoute'
 import { useGetUserProfileQuery } from './redux/api/authApi'
-import CategoryForm from './admin/CategoryForm'
+import CategoryForm from './components/CategoryForm'
+import PrivateRoute from './components/protected/PrivateRoute'
 
 const App = () => {
 
   const {isLoading} = useGetUserProfileQuery();
+
+  const {isAuthenticated, user} = useSelector(state=>state.auth)
+console.log("llllllllllllll",isAuthenticated,user);
 
 
   const router = createBrowserRouter(
@@ -40,8 +44,13 @@ const App = () => {
         <Route path='/login' element={<Login/>}/>
         <Route path='/category-form' element={<CategoryForm/>}/>
 
-        <Route path='admin' element={<ProtectedRoute/>}>
+        {/* <Route path='me' element={<PrivateRoute/>}>
+          
+        </Route> */}
+
+        <Route path='admin' element={<AdminRoute/>}>
           <Route path='add-product' element={<AddProduct/>}/>
+          <Route path='add-category' element={<CategoryForm/>}/>
         </Route>
       </Route>
     )
