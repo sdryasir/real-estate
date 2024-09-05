@@ -26,7 +26,7 @@ const App = () => {
   const {isLoading} = useGetUserProfileQuery();
 
   const {isAuthenticated, user} = useSelector(state=>state.auth)
-console.log("llllllllllllll",isAuthenticated,user);
+
 
 
   const router = createBrowserRouter(

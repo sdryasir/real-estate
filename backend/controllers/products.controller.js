@@ -74,12 +74,38 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
-            const products = await Product.find()
-            res.json({
-                success:true,
-                message: "getAllProducts called", 
-                products       
-            })
+            const { search, sort, page = 1, limit = 20 } = req.query;
+
+            // Build query object
+            let query = {};
+            if (search) {
+                query.title = { $regex: search, $options: 'i' }; // Case-insensitive search
+            }
+            
+
+            // Pagination
+            const skip = (page - 1) * limit;
+
+            console.log(query);
+            
+
+            // Execute query with sorting and pagination
+            const products = await Product.find(query)
+                .sort(sort)
+                .skip(skip)
+                .limit(parseInt(limit));
+
+            // Get total count for pagination
+            const total = await Product.countDocuments(query);
+
+        res.json({
+            success: true,
+            message: "getAllProducts called",
+            products,
+            total,
+            page: parseInt(page),
+            pages: Math.ceil(total / limit)
+        });
         } catch (error) {
             next(error);
         } 

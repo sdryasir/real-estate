@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAddProductMutation } from '../../redux/api/productApi';
 
 const AddProduct = () => {
@@ -12,6 +12,8 @@ const AddProduct = () => {
     const [mainImagePreview, setMainImagePreview] = useState(null); // Preview for the main image
     const [remainingImages, setRemainingImages] = useState([]);
     const [remainingImagesPreviews, setRemainingImagesPreviews] = useState([]); // Previews for remaining images
+
+    const { user } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 
@@ -45,6 +47,7 @@ const AddProduct = () => {
           });
       
           try {
+
               const product = await addProduct(formData).unwrap();
               console.log(product);
       

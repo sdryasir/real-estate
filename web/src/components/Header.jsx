@@ -160,6 +160,8 @@ const Header = () => {
                                   <span className="arrow_carrot-down"></span>
                                   <ul>
                                       <li><Link to="#">Dashboard</Link></li>
+                                      <li><Link to="admin/add-product">Add Product</Link></li>
+                                      <li><Link to="admin/add-category">Add Category</Link></li>
                                       <li><Link to="#">Profile</Link></li>
                                       <li><button onClick={handleLogout} >Logout</button></li>
                                   </ul>
