@@ -24,13 +24,6 @@ const LoginForm = () => {
         }
     }, [isAuthenticated])
 
-
-    useEffect(() => {
-        if(isAuthenticated){
-            navigate('/')
-        }
-    }, [isAuthenticated])
-
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values } = useFormik({
         initialValues: {
             email: '',

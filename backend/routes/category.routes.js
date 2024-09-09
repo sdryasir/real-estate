@@ -8,7 +8,7 @@ router.route('/category/new').post(createCategory)
 router.route('/category/all').get(getAllCategorys)
 router.route('/category/single').get(getCategoryById)
 router.route('/category/update').put(updateCategory)
-router.route('/category/delete').delete(deleteCategory)
+router.route('/category/delete/:id').delete(deleteCategory)
 
 
 

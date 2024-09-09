@@ -6,7 +6,8 @@ function AdminRoute() {
     const {isAuthenticated, user} = useSelector(state=>state.auth)
 
   return (
-    user?.roles == 'admin' && isAuthenticated ? <Outlet/>:<Navigate to={'/'} replace={true}/>
+    // user?.roles == 'admin' && 
+    isAuthenticated ? <Outlet/>:<Navigate to={'/'} replace={true}/>
   )
 }
 

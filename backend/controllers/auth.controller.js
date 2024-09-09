@@ -10,16 +10,16 @@ export default class AuthController{
         const user = req.body;
         
         try {
-            const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
-                folder: 'ecommerce-b14',
-            }).catch((error) => {
-               next(error)
-            });
+            // const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
+            //     folder: 'ecommerce-b14',
+            // }).catch((error) => {
+            //    next(error)
+            // });
 
-            if(uploadResult){
-                console.log("uploadResult.secure_url", uploadResult.secure_url);
+            // if(uploadResult){
+                // console.log("uploadResult.secure_url", uploadResult.secure_url);
                 
-                user.avatar = uploadResult.secure_url;
+                // user.avatar = uploadResult.secure_url;
 
                 user.password = await bcrypt.hash(user.password, 10);
                 await User.create(user)
@@ -27,7 +27,7 @@ export default class AuthController{
                     success:true,
                     message:"user account has been created"
                 })
-            }
+            // }
 
         } catch (error) {
             next(error);
@@ -60,7 +60,7 @@ export default class AuthController{
                 token,
             })
         } catch (error) {
-            console.log(error);
+            next(error)
         }
     }
     async logout(req, res, next) {        
@@ -70,7 +70,7 @@ export default class AuthController{
                 message:'You are logged out'
             })
         } catch (error) {
-            console.log(error);
+            next(error)
         }
     }  
 }

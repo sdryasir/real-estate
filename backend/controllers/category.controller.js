@@ -4,23 +4,24 @@ import { v2 as cloudinary } from "cloudinary";
     
     export const createCategory = async (req, res, next)=> {
         const category = req.body        
-        console.log(category);
+        // console.log(category);
         
         try {
-            const uploadResult = await cloudinary.uploader
-            .upload(req.body.avatar, {
-              folder: "ecommerece-b14",
-            })
-            .catch((error) => {
-              next(error);
-            });
+        //     const uploadResult = await cloudinary.uploader
+        //     .upload(req.body.avatar, {
+        //       folder: "ecommerece-b14",
+        //     })
+        //     .catch((error) => {
+        //       next(error);
+        //     });
       
-          if (uploadResult) {
-            category.avatar = uploadResult.secure_url;
-            console.log(category.avatar);
-          }
+        //   if (uploadResult) {
+        //     category.avatar = uploadResult.secure_url;
+        //     console.log(category.avatar);
+        //   }
             const categoryCreated = await Category.create(category);
             res.json({
+                success:true,
                 message: "category created successfully",
                 categoryCreated
             })
@@ -34,14 +35,13 @@ import { v2 as cloudinary } from "cloudinary";
 
         try {
             const category = await Category.find()
-            console.log("----------", category);
+            // console.log("----------", category);
             res.json({
                 message: "getAllCategory called", 
                 category       
             })
         } catch (error) {
             console.log('*****', error);
-            
             next(error);
         } 
     }
@@ -62,7 +62,7 @@ import { v2 as cloudinary } from "cloudinary";
     
     export const updateCategory  = async (req, res, next) => {
         const body = req.body;
-        const {id} = req.query;
+        const id = req.body._id;
         try {
             const category = await Category.findByIdAndUpdate(id, body)
             res.json({
@@ -75,9 +75,8 @@ import { v2 as cloudinary } from "cloudinary";
     }
     
     export const deleteCategory =  async (req, res, next) => {
-        const {id} = req.query;
         try {
-            const category = await Category.findByIdAndDelete(id)
+            const category = await Category.findByIdAndDelete(req.params.id)
             res.json({
                 message: "Category Deleted successfully"
             })

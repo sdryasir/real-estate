@@ -13,21 +13,15 @@ import Blog from './pages/Blog'
 import Contact from './pages/Contact'
 import Register from './pages/Register'
 import Login from './components/Login'
-import { useSelector } from 'react-redux';
-import Error from './pages/Error'
 import AddProduct from './pages/admin/AddProduct'
 import AdminRoute from './components/protected/AdminRoute'
-import { useGetUserProfileQuery } from './redux/api/authApi'
-import CategoryForm from './components/CategoryForm'
 import PrivateRoute from './components/protected/PrivateRoute'
+import Dashboard from './pages/admin/Dashboard'
+import ManageProducts from './pages/admin/ManageProducts'
+import CategoryForm from './pages/admin/CategoryForm'
+import ManageCategory from './pages/admin/ManageCategory'
 
 const App = () => {
-
-  const {isLoading} = useGetUserProfileQuery();
-
-  const {isAuthenticated, user} = useSelector(state=>state.auth)
-
-
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -49,8 +43,11 @@ const App = () => {
         </Route> */}
 
         <Route path='admin' element={<AdminRoute/>}>
+          <Route path='dashboard' element={<Dashboard/>}/>
           <Route path='add-product' element={<AddProduct/>}/>
+          <Route path='manage-products' element={<ManageProducts/>}/>
           <Route path='add-category' element={<CategoryForm/>}/>
+          <Route path='manage-category' element={<ManageCategory/>}/>
         </Route>
       </Route>
     )

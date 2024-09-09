@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useCreateCategoryMutation } from "../redux/api/categoryApi";
-import { setCategory } from "../redux/features/categorySlice";
+import { useCreateCategoryMutation } from "../../redux/api/categoryApi";
 import { useDispatch } from "react-redux";
+import { useGetAllCategoryQuery } from "../../redux/api/categoryApi";
 
 const CategoryForm = () => {
 
   const [createCategory,{data,isLoading,error}] = useCreateCategoryMutation()
-  const dispatch = useDispatch()
-
+  
   const {
     handleChange,
     handleBlur,
@@ -33,11 +32,9 @@ const CategoryForm = () => {
       
     }),
     onSubmit: async (values) => {
-      console.log(values);
-      const {categoryCreated} = await createCategory(values).unwrap()
-      console.log(categoryCreated.title,categoryCreated.avatar);
-      
-      dispatch(setCategory({title:categoryCreated.title,avatar:categoryCreated.avatar}))
+      await createCategory(values).unwrap()
+      // console.log(categoryCreated.title,categoryCreated.avatar);
+      alert('Category Added in DB')
     },
   });
 
@@ -58,7 +55,7 @@ const CategoryForm = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="contact__form__title">
-                <h2>Category Name</h2>
+                <h2>Add New Category</h2>
               </div>
             </div>
           </div>
@@ -75,6 +72,7 @@ const CategoryForm = () => {
                            
                             <div className="col-lg-12 text-center mt-5">
                                 <button type="submit" className="site-btn mb-3">Add Category</button> <br />
+                                <Link to={'/admin/dashboard'} className='text-primary'>Back to Dashboard</Link>
                                
                             </div>
                         </div>

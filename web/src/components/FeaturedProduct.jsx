@@ -18,7 +18,8 @@ const FeaturedProduct = () => {
         if(data){
             setProducts(data.products)
         }  
-        console.log(products);
+        // console.log(products);
+        
         
     },[data, products])
 
