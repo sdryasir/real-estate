@@ -8,10 +8,16 @@ const categorySchema = new Schema({
         required:[true, 'Please provide the category title'],
         minLength:[3, 'Title must have atleast 3 characters in length'],
         maxLength:[50, 'Title must have less than 50 characters in length'],
-        unique:true
     },
-    avatar:{
-        type:String,
+    image:{
+       public_id:{
+           type:String,
+           required:true
+       },
+       url:{
+           type:String,
+           required:true
+       }
     }
 })
 

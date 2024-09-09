@@ -16,7 +16,7 @@ const productSchema = new Schema({
     max: [10000, 'Maximum price is 10000'],
     required: [true, 'Please provide the price'],
   },
-  quantity: {
+  stock: {
     type: Number,
     min: [1, 'Minimum quantity is 1'],
     max: [100, 'Maximum quantity is 100'],
@@ -27,6 +27,38 @@ const productSchema = new Schema({
     required: [true, 'Please provide a description'],
     minLength: [10, 'Description must have at least 10 characters'],
   },
+  ratings: {
+    type: Number,
+    min: [1, 'Minimum rating is 1'],
+    max: [5, 'Maximum rating is 5'],
+    required: [true, 'Please provide the rating'],
+  },
+  category: {
+    type: String,
+    required: [true, 'Please provide the category'],
+  },
+  weight: {
+    type: Number,
+    min: [1, 'Minimum weight is 1'],
+    max: [20, 'Maximum weight is 20'],
+    required: [true, 'Please provide the weight'],
+  },
+  numOfReviews: {
+    type: Number,
+    min: [0, 'Minimum number of reviews is 0'],
+    required: [true, 'Please provide the number of reviews'],
+  },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Review',
+    },
+  ],
+  user:{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Please provide the user'],
+  }
   // mainImage: {
   //   type: String,
   //   required: [true, 'Please provide a main image'],

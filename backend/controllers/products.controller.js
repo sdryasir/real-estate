@@ -7,51 +7,51 @@ export default class ProductController{
     async createProduct(req, res, next) {
         const { title, price, quantity, description } = req.body;
 
-        // const { mainImage, remainingImages } = req.files;
+        const { mainImage, remainingImages } = req.files;
         
     
         // Debug: Check if files are being received correctly
-        // console.log(req.files);
+        console.log(req.files);
     
-        // if (!mainImage || mainImage.length === 0) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: ['Please provide a main image'],
-        //     });
-        // }
+        if (!mainImage || mainImage.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: ['Please provide a main image'],
+            });
+        }
     
         try {
             // Upload main image to Cloudinary using the file buffer
-            // const mainImageResult = await new Promise((resolve, reject) => {
-            //     cloudinary.uploader.upload_stream(
-            //         { folder: 'ecommerce-b14/main_images' },
-            //         (error, result) => {
-            //             if (error) {
-            //                 reject(new Error('Error uploading main image'));
-            //             }
-            //             resolve(result);
-            //         }
-            //     ).end(mainImage[0].buffer); // Using buffer instead of path
-            // });
+            const mainImageResult = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream(
+                    { folder: 'ecommerce-b14/main_images' },
+                    (error, result) => {
+                        if (error) {
+                            reject(new Error('Error uploading main image'));
+                        }
+                        resolve(result);
+                    }
+                ).end(mainImage[0].buffer); // Using buffer instead of path
+            });
     
             // Upload remaining images to Cloudinary using buffers
-            // const remainingImageUrls = [];
-            // if (remainingImages && remainingImages.length > 0) {
-            //     for (const file of remainingImages) {
-            //         const result = await new Promise((resolve, reject) => {
-            //             cloudinary.uploader.upload_stream(
-            //                 { folder: 'ecommerce-b14/remaining_images' },
-            //                 (error, result) => {
-            //                     if (error) {
-            //                         reject(new Error('Error uploading remaining images'));
-            //                     }
-            //                     resolve(result.secure_url);
-            //                 }
-            //             ).end(file.buffer); // Using buffer instead of path
-            //         });
-            //         remainingImageUrls.push(result);
-            //     }
-            // }
+            const remainingImageUrls = [];
+            if (remainingImages && remainingImages.length > 0) {
+                for (const file of remainingImages) {
+                    const result = await new Promise((resolve, reject) => {
+                        cloudinary.uploader.upload_stream(
+                            { folder: 'ecommerce-b14/remaining_images' },
+                            (error, result) => {
+                                if (error) {
+                                    reject(new Error('Error uploading remaining images'));
+                                }
+                                resolve(result.secure_url);
+                            }
+                        ).end(file.buffer); // Using buffer instead of path
+                    });
+                    remainingImageUrls.push(result);
+                }
+            }
     
             // Create product in MongoDB with images
             const product = await Product.create({
@@ -59,8 +59,8 @@ export default class ProductController{
                 price,
                 quantity,
                 description,
-                // mainImage: mainImageResult.secure_url,
-                // images: remainingImageUrls,
+                mainImage: mainImageResult.secure_url,
+                images: remainingImageUrls,
             });
     
             res.json({
