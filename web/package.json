@@ -21,6 +21,7 @@
     "react-router": "^6.25.1",
     "react-router-dom": "^6.25.1",
     "redux-persist": "^6.0.0",
+    "tiny-slider-react": "^0.5.7",
     "yup": "^1.4.0"
   },
   "devDependencies": {

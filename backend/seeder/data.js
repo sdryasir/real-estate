@@ -15,7 +15,7 @@ export const products =  [
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Apple Gourd (Gol Lauki) 1kg",
@@ -33,7 +33,7 @@ export const products =  [
       weight: 0.5,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Spring Onion (Hara Pyaz) 500g",
@@ -51,7 +51,7 @@ export const products =  [
       weight: 1,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Tomato (Tamator) 1 KG",
@@ -69,7 +69,7 @@ export const products =  [
       weight: 1,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Spinach (Palak) 1kg",
@@ -87,7 +87,7 @@ export const products =  [
       weight: 1,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Gourd (Tinda) 1kg",
@@ -100,12 +100,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105026/ecommerce_test/products/rni5ouenaki8aqpbvaib.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Round Gourd (Tinda) 0.5kg",
@@ -118,12 +118,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/wue9ufliimstveh5svwl.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Potatoes 1kg",
@@ -136,12 +136,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/bg0ljczgals5rm4zcvoo.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Peppermint (Pudina) 1bundle",
@@ -152,14 +152,14 @@ export const products =  [
         {
           public_id: "ecommerce_test/products/emb14aoaowsc9rztgjul",
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/emb14aoaowsc9rztgjul.jpg",
-        },
+        }
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Peeled Garlic (Chila Hua Lehsan) 500g",
@@ -172,12 +172,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/ht2ou7z3vzjzkg4tx5qr.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Pear (Nashpati) 1kg",
@@ -190,12 +190,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/ulb3j61vmqqgvfknrdkq.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Papaya (Papita) 1-1.5 kg",
@@ -208,12 +208,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105025/ecommerce_test/products/fhpgcbqkqszkgdgz4wdv.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Mango (Chounsa) 1Kg",
@@ -226,12 +226,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/rh0tydvtn2orhvx5j44o.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Green Mango (Carrie) 1Kg",
@@ -244,12 +244,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/ekn0thhejahdzszfcsdw.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Gola Angoor (Grapes) 1KG",
@@ -262,12 +262,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/bwrerdvesvrqsccv28vd.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Banana (Kela) 12Piece",
@@ -280,12 +280,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/kveb4i8hdg0qmrb07tfv.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fd",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Arvi (Taro) 1kg",
@@ -298,12 +298,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/ikuoctzdxo7eeod0erfe.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Beetroot (Chukandar) 0.5kg",
@@ -316,12 +316,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/thljolqdlluzzquh4nw3.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Bottle Gourd ( Lambi Lauki) 1kg",
@@ -334,12 +334,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/ujlzghlczeub1bpeywu8.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Broccoli (Sabz Gobi) 500g",
@@ -352,12 +352,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/widvxltw6epopxlvjclj.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "China Garlic (Lehsan) 250g",
@@ -370,12 +370,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/oljwrvtio6dqqrmbfv8f.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Cilantro (Dhanyan) 1bundle",
@@ -388,12 +388,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/qptlea8wqg9gozv1ezsr.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Cucumber (Kheera) 500g",
@@ -406,12 +406,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105022/ecommerce_test/products/fo0mvxlog69b1qztmva7.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Desi Lemon (Limbu) 250g",
@@ -424,12 +424,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/gnwcjse53ixkr8l9imyu.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Fresh Cucumber (Kheera) 1 Kg",
@@ -442,12 +442,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/ejcoidqxjcf0ir4z1gdv.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Ginger (Adrak) 250g",
@@ -460,12 +460,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105023/ecommerce_test/products/jywsmxk2zt1wx9w0w8p3.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Green Chilli (Hari Mirch) 250gm",
@@ -478,12 +478,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/uofc2xzfyyrxny8r8ena.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Guava (Amrood)1kg",
@@ -496,12 +496,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/eqfuvib92d4qopnaxd74.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b215",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "LadyFinger (Bhindi) 500g",
@@ -514,12 +514,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/nr7lmyvg1g9eeiqqvirv.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
     {
       title: "Onion (Pyaz) 5 Kg",
@@ -532,12 +532,12 @@ export const products =  [
           url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725105024/ecommerce_test/products/a5m1senyeu4racmpp4gr.jpg",
         },
       ],
-      category: "66d3822e5d735fe3d18fd3fc",
+      category: "66dee62edae78d3bdfa1b214",
       stock: 50,
       weight: 0.25,
       numOfReviews: 10,
       reviews: [],
-      user:'66b627822edef19a08d098e4'
+      user:'66bde6a7d2063c46580d0b8a'
     },
   ];
 

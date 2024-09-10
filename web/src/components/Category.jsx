@@ -1,74 +1,37 @@
 import React from 'react';
-import OwlCarousel from 'react-owl-carousel';
+import TinySlider from "tiny-slider-react";
+import 'tiny-slider/dist/tiny-slider.css';
+import { useGetAllCategoryQuery } from '../redux/api/categoryApi';
+
 
 const Category = () => {
+
+  const {data: categories, isLoading, error} = useGetAllCategoryQuery()
+
+  const settings = {
+    lazyload: true,
+    nav: false,
+    mouseDrag: true
+  };
+  
   return (
     <div>
       <section className="categories">
         <div className="container">
           <div className="row">
-            <OwlCarousel
-              className="categories__slider owl-carousel"
-              loop={true}
-              margin={0}
-              items={4}
-              dots={false}
-              nav={true}
-              navText={[
-                "<span class='fa fa-angle-left'><span/>",
-                "<span class='fa fa-angle-right'><span/>",
-              ]}
-              animateOut="fadeOut"
-              animateIn="fadeIn"
-              smartSpeed={1200}
-              autoHeight={false}
-              autoplay={true}
-              responsive={{
-                0: {
-                  items: 1,
-                },
-                480: {
-                  items: 2,
-                },
-                768: {
-                  items: 3,
-                },
-                992: {
-                  items: 4,
-                },
-              }}
-            >
-              <div className="col-lg-3">
-                <div className="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
-                  <img src='img\categories\cat-1.jpg'/>
-                  <h5><a href="#">Fresh Fruit</a></h5>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
-                <img src='img\categories\cat-2.jpg'/>
-                  <h5><a href="#">Dried Fruit</a></h5>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
-                <img src='img\categories\cat-3.jpg'/>
-                  <h5><a href="#">Vegetables</a></h5>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
-                <img src='img\categories\cat-4.jpg'/>
-                  <h5><a href="#">drink fruits</a></h5>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
-                <img src='img\categories\cat-5.jpg'/>
-                  <h5><a href="#">drink fruits</a></h5>
-                </div>
-              </div>
-            </OwlCarousel>
+            {
+                categories?.category?.map((category) => 
+                  <div className="col-lg-3">
+                    <div className="categories__item set-bg" data-setbg={category?.image?.url}>
+                      <img src={category?.image?.url}/>
+                      <h5><a href="#">{category.title}</a></h5>
+                    </div>
+                  </div>
+                )
+              }
+
+              
+             
           </div>
         </div>
       </section>
