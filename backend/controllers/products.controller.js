@@ -17,6 +17,7 @@ export default class ProductController{
                 message: ['Please provide a main image'],
             });
         }
+        
     
         try {
             // Upload main image to Cloudinary using the file buffer
