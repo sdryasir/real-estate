@@ -20,7 +20,8 @@ export default class UserController{
         try {
             const users = await User.find()
             res.json({
-                message: "getAllUsers called", 
+                success:true,
+                message: "List of all users", 
                 users       
             })
         } catch (error) {
@@ -38,6 +39,19 @@ export default class UserController{
         })
        } catch (error) {
         console.log(error);
+       }
+        
+    }
+    async getMe(req, res, next){
+       const id = req.user.id     
+       try {
+        const user = await User.findById(id)
+        res.json({
+            success:true,
+            user
+        })
+       } catch (error) {
+        next(new Error(error));
        }
         
     }

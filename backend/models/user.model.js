@@ -23,9 +23,7 @@ const UserSchema = new Schema({
         unique:true
     },
     email: {
-        type:Number,
-        min:[100, 'Please set 100 or more as minimum price'],
-        max:[10000, 'Please set 10000 or less as mx price'],
+        type:String,
         required:[true, 'Please provide the email'],
         unique:true
     },
@@ -38,7 +36,7 @@ const UserSchema = new Schema({
     },
     roles:{
         type:String,
-        default:'user',
+        default:'customer',
         enum:['customer', 'moderator', 'admin']
     },
     avatar:{

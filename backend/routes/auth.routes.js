@@ -7,6 +7,7 @@ const auth = new AuthController()
 
 router.route('/auth/register').post(auth.signUp)
 router.route('/auth/login').post(auth.login)
+router.route('/auth/logout').get(auth.logout)
 
 
 export default router

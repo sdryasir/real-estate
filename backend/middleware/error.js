@@ -23,6 +23,7 @@ export const error = (err, req, res, next) => {
     }
 
     res.json({
+        success:false,
         message:error.message || 'Something went wrong'
     })
 
