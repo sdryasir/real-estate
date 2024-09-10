@@ -16,7 +16,7 @@ const productSchema = new Schema({
     max: [10000, 'Maximum price is 10000'],
     required: [true, 'Please provide the price'],
   },
-  stock: {
+  quantity: {
     type: Number,
     min: [1, 'Minimum quantity is 1'],
     max: [100, 'Maximum quantity is 100'],
@@ -27,51 +27,19 @@ const productSchema = new Schema({
     required: [true, 'Please provide a description'],
     minLength: [10, 'Description must have at least 10 characters'],
   },
-  ratings: {
-    type: Number,
-    min: [1, 'Minimum rating is 1'],
-    max: [5, 'Maximum rating is 5'],
-    required: [true, 'Please provide the rating'],
-  },
-  category: {
+  mainImage: {
     type: String,
-    required: [true, 'Please provide the category'],
+    required: [true, 'Please provide a main image'],
   },
-  weight: {
-    type: Number,
-    min: [1, 'Minimum weight is 1'],
-    max: [20, 'Maximum weight is 20'],
-    required: [true, 'Please provide the weight'],
-  },
-  numOfReviews: {
-    type: Number,
-    min: [0, 'Minimum number of reviews is 0'],
-    required: [true, 'Please provide the number of reviews'],
-  },
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Review',
+  images: {
+    type: [String],
+    validate: {
+      validator: function (val) {
+        return val.length >= 1 && val.length <= 5;
+      },
+      message: 'Please provide between 1 and 5 additional images',
     },
-  ],
-  user:{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'Please provide the user'],
-  }
-  // mainImage: {
-  //   type: String,
-  //   required: [true, 'Please provide a main image'],
-  // },
-  // images: {
-  //   type: [String],
-  //   validate: {
-  //     validator: function (val) {
-  //       return val.length >= 1 && val.length <= 5;
-  //     },
-  //     message: 'Please provide between 1 and 5 additional images',
-  //   },
-  // },
+  },
 });
 
 export const Product = mongoose.model('Product', productSchema);
