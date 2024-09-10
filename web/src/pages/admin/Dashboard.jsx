@@ -1,14 +1,52 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useGetAllCategoryQuery } from '../../redux/api/categoryApi';
 import { useGetAllProductsQuery } from '../../redux/api/productApi';
+import DataTable from 'react-data-table-component';
 
 const Dashboard = () => {
-
-    const {products} = useSelector(state=>state.products);
+    const { products } = useSelector(state => state.products);
     useGetAllProductsQuery();
     useGetAllCategoryQuery();
+
+    const columns = [
+        {
+            name: '#',
+            cell: (row, index) => index + 1, // Auto-increment serial number
+            width: '80px'
+        },
+        {
+            name: 'Title',
+            selector: row => row.title,
+            sortable: true
+        },
+        {
+            name: 'Price',
+            selector: row => row.price,
+            sortable: true
+        },
+        {
+            name: 'Stock',
+            selector: row => row.stock,
+            sortable: true
+        },
+        {
+            name: 'Weight',
+            selector: row => row.weight,
+            sortable: true
+        },
+        {
+            name: 'Rating',
+            selector: row => row.ratings,
+            sortable: true
+        },
+        {
+            name: 'Description',
+            selector: row => row.description,
+            sortable: true
+        }
+    ];
 
     return (
         <>
@@ -16,7 +54,7 @@ const Dashboard = () => {
                 <div className='aside p-4'>
                     <center>
                         <h3>Links</h3>
-                        <hr className='mt-5'/>
+                        <hr className='mt-5' />
                         <Link to={'/admin/add-product'} className='text-dark'><b>Add New Product</b></Link><br /><hr />
                         <Link to={'/admin/manage-products'} className='text-dark'><b>Manage All Products</b></Link><br /><hr />
                         <Link to={'/admin/add-category'} className='text-dark'><b>Add New Category</b></Link><br /><hr />
@@ -29,32 +67,21 @@ const Dashboard = () => {
                         <div><Link to={'/admin/add-product'} className='text-light'><button className='btn btn-primary'><b>Add New Product</b></button></Link></div>
                     </div>
                     {
-                        products.length<=0 ? <h2 className='mt-5'>No Products Found</h2> :
-                                    <div className='mt-5 row mb-3'>
-                                    <b className="col-2">#</b>
-                                    <b className="col-2">Title</b>
-                                    <b className="col-2">Price</b>
-                                    <b className="col-2">Quantity</b>
-                                    <b className="col-4">Description</b>
-                                    </div>
+                        products.length <= 0
+                            ? <h2 className='mt-5'>No Products Found</h2>
+                            : <DataTable
+                                columns={columns}
+                                data={products}
+                                noDataComponent={<h2>No products available</h2>}
+                                pagination
+                                highlightOnHover
+                                pointerOnHover
+                              />
                     }
-                    {
-                        products?.length > 0 && products?
-                            products?.map((item,key) => {
-                                return <div key={key} className='row mb-3'>
-                                            <th className='col-2'>{++key}</th>
-                                            <td  className='col-2'>{item.title}</td>
-                                            <td className='col-2'>{item.price}</td>
-                                            <td className='col-2'>{item.quantity}</td>
-                                            <td className='col-4'>{item.description}</td>
-                                </div>
-                    })  : null
-                   }
                 </div>
-
             </div>
         </>
-    )
+    );
 }
 
-export default Dashboard
+export default Dashboard;
