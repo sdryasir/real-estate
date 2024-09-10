@@ -10,16 +10,16 @@ export default class AuthController{
         const user = req.body;
         
         try {
-            const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
-                folder: 'ecommerce-b14',
-            }).catch((error) => {
-               next(error)
-            });
+            // const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
+            //     folder: 'ecommerce-b14',
+            // }).catch((error) => {
+            //    next(error)
+            // });
 
-            if(uploadResult){
-                console.log("uploadResult.secure_url", uploadResult.secure_url);
+            // if(uploadResult){
+                // console.log("uploadResult.secure_url", uploadResult.secure_url);
                 
-                user.avatar = uploadResult.secure_url;
+                // user.avatar = uploadResult.secure_url;
 
                 user.password = await bcrypt.hash(user.password, 10);
                 await User.create(user)
@@ -27,7 +27,7 @@ export default class AuthController{
                     success:true,
                     message:"user account has been created"
                 })
-            }
+            // }
 
         } catch (error) {
             next(error);
@@ -53,26 +53,24 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.PRIVATEKEY, { expiresIn: '1h' });
-
-console.log("token", token);
+        }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
         try {
-            res.cookie('token',token, { maxAge: 900000, httpOnly: true }).json({
+            res.cookie('token',token, { maxAge: 9000000, httpOnly: true }).json({
                 token,
             })
         } catch (error) {
-            console.log(error);
+            next(error)
         }
     }
     async logout(req, res, next) {        
         try {
-            res.cookie('auth_token','', { maxAge: 0, httpOnly: true }).json({
+            res.cookie('token','', { maxAge: 0, httpOnly: true }).json({
                 success:true,
                 message:'You are logged out'
             })
         } catch (error) {
-            console.log(error);
+            next(error)
         }
     }  
 }

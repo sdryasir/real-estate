@@ -8,6 +8,7 @@ const user = new UserController()
 
 router.route('/users').get(user.getAllUsers);
 router.route('/users/delete').delete(user.deleteUser);
+router.route('/users/update').patch(user.updateUser);
 router.route('/me').get(isUserAuthenticated, user.getMe);
 
 

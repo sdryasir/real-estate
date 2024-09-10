@@ -1,51 +1,49 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { allProducts } from '../features/productSlice';
+import { getAllCategory } from '../features/categorySlice';
 
-export const productApi = createApi({
-    reducerPath: 'productApi',
+export const categoryApi = createApi({
+    reducerPath: 'categoryApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/',
+        baseUrl: 'http://localhost:8000',
         credentials: 'include'
     }),
     endpoints: (builder) => ({
-        addProduct: builder.mutation({
+        createCategory: builder.mutation({
             query: (data) => ({
-                url: `/products/new`,
+                url: `/category/new`,
                 method: 'POST',
                 body: data,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    dispatch(productApi.endpoints.getAllProducts.initiate(null));
-                    console.log('from on query after adding products calling getAllProducts');
+                    dispatch(categoryApi.endpoints.getAllCategory.initiate(null))     
                 } catch (error) {
-                    console.log('Error from adding products', error);
+                    console.log('Error from adding category', error);
 
                 }
             }
         }),
-        getAllProducts: builder.query({
-            query: () => '/products/all',
+        getAllCategory: builder.query({
+            query: () => `/category/all`,
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    dispatch(allProducts(data));
+                    const {data} = await queryFulfilled;
+                    dispatch(getAllCategory(data))
                 } catch (error) {
-                    console.log('Error from get all product api', error);
+                   console.log('Error from getAllCategory api', error);                 
                 }
             }
         }),
-        deleteProduct: builder.mutation({
+        deleteCategory: builder.mutation({
             query: (id) => ({
-                url: `products/delete/${id}`,
+                url: `category/delete/${id}`,
                 method: 'DELETE',
-
             }),
         }),
-        updateProduct: builder.mutation({
+        updateCategory : builder.mutation ({
             query: (data) => ({
-                url: '/products/update',
+                url: `/category/update`,
                 method: 'PUT',
                 body: data,
             }),
@@ -58,7 +56,7 @@ export const productApi = createApi({
                 }
             }
         })
-    }),
+    })
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery, useDeleteProductMutation, useUpdateProductMutation } = productApi
+export const { useCreateCategoryMutation, useGetAllCategoryQuery, useDeleteCategoryMutation , useUpdateCategoryMutation} = categoryApi

@@ -1,27 +1,17 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
-import { useGetMeQuery, useLazyLogoutQuery } from '../redux/api/authApi';
-import { useNavigate } from 'react-router-dom';
-import {useSelector, useDispatch } from 'react-redux';
-import { clearUserInfo } from '../redux/features/authSlice';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGetUserProfileQuery, useLazyLogoutQuery } from '../redux/api/authApi';
+
 
 
 const Header = () => {
 
-
-  const {isLoading} = useGetMeQuery()
-  const [logout, {data}] = useLazyLogoutQuery()
-  const {isAuthenticated, user} = useSelector(state=>state.auth)
-  const navigate = useNavigate();
-  const dispatch = useDispatch()
-
-
-  const handlelogout = async ()=>{
-    await logout()
-    navigate(0)
-  }
-  
-
+    const [logout, {isLoading}] = useLazyLogoutQuery();
+    const {isAuthenticated, user} = useSelector(state=>state.auth)
+    useGetUserProfileQuery();
+    const navigate = useNavigate();
+    
     const [showMenu, setShowMenu] = useState(false);
 
     const handleHamburgerClick = () => {
@@ -33,6 +23,10 @@ const Header = () => {
     const handlePagesClick = () => {
       setShowPagesDropdown(!showPagesDropdown);
     };
+
+    const handleLogout = async ()=>{
+      await logout();      
+    }
 
 
   return (
@@ -66,8 +60,23 @@ const Header = () => {
             </div>
             <div className="header__top__right__auth">
   
-            <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
-            <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
+            {
+                                isAuthenticated?
+                                  <div className="header__top__right__language mt-3">
+                                  <img style={{width:'30px', height:'30px', borderRadius:'50%'}} src={user?.avatar} alt=""/>
+                                  <div>Hi, {user?.firstname} {user?.lastname}</div>
+                                  <span className="arrow_carrot-down"></span>
+                                  <ul>
+                                      <li><Link to="#">Profile</Link></li>
+                                      <li><Link to="/admin/dashboard">Dashboard</Link></li>
+                                      <li><button onClick={handleLogout} >Logout</button></li>
+                                  </ul>
+                                  </div>:
+                                  <>
+                                  <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
+                                  <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
+                                  </>
+                                }
             </div>
         </div>
         <nav className="humberger__menu__nav mobile-menu">
@@ -158,14 +167,15 @@ const Header = () => {
                               <div className="header__top__right__auth d-flex pt-3">
                                 
                                 {
-                                  isAuthenticated && (user?.success || user.data?.success) ? <div className="header__top__right__language">
-                                  <img style={{width:'30px', height:'30px', borderRadius:'50%'}} src={user?.user?.avatar} alt=""/>
-                                  <div>Hi, {user?.user?.firstname} {user?.user?.lastname}</div>
+                                isAuthenticated?
+                                  <div className="header__top__right__language">
+                                  <img style={{width:'30px', height:'30px', borderRadius:'50%'}} src={user?.avatar} alt=""/>
+                                  <b>Hi, {user?.firstname} {user?.lastname}</b>
                                   <span className="arrow_carrot-down"></span>
                                   <ul>
-                                      <li><Link to="#">Dashboard</Link></li>
                                       <li><Link to="#">Profile</Link></li>
-                                      <li><button onClick={handlelogout}>Logout</button></li>
+                                      <li><Link to="/admin/dashboard">Dashboard</Link></li>
+                                      <li><button onClick={handleLogout} >Logout</button></li>
                                   </ul>
                                   </div>:
                                   <>
@@ -184,7 +194,7 @@ const Header = () => {
             <div className="row">
                 <div className="col-lg-3">
                     <div className="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""/></a>
+                        <Link to={'/'}><img src="img/logo.png" alt=""/></Link>
                     </div>
                 </div>
                 <div className="col-lg-6">

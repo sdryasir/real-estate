@@ -59,6 +59,9 @@ export default class UserController{
     async updateUser (req, res, next) {
         const body = req.body;
         const {id} = req.query;
+
+        console.log(id, body);
+        
         try {
             const user = await User.findByIdAndUpdate(id, body)
             res.json({

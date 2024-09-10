@@ -6,7 +6,9 @@ export default class ProductController{
     
     async createProduct(req, res, next) {
         const { title, price, quantity, description } = req.body;
+
         const { mainImage, remainingImages } = req.files;
+        
     
         // Debug: Check if files are being received correctly
         console.log(req.files);
@@ -66,7 +68,6 @@ export default class ProductController{
                 success: true,
                 message: 'Product created successfully',
                 product,
-                
             });
         } catch (error) {
             next(error);
@@ -75,12 +76,38 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
+            const { search, sort, page = 1, limit = 20 } = req.query;
+
+            // Build query object
+            let query = {};
+            if (search) {
+                query.title = { $regex: search, $options: 'i' }; // Case-insensitive search
+            }
+            
+
+            // Pagination
+            const skip = (page - 1) * limit;
+
+            console.log(query);
+            
+
+            // Execute query with sorting and pagination
             const products = await Product.find()
-            res.json({
-                success:true,
-                message: "getAllProducts called", 
-                products       
-            })
+                .sort(sort)
+                .skip(skip)
+                .limit(parseInt(limit));
+
+            // Get total count for pagination
+            const total = await Product.countDocuments(query);
+
+        res.json({
+            success: true,
+            message: "getAllProducts called",
+            products,
+            total,
+            page: parseInt(page),
+            pages: Math.ceil(total / limit)
+        });
         } catch (error) {
             next(error);
         } 
@@ -103,7 +130,7 @@ export default class ProductController{
     
     async updateProduct (req, res, next) {
         const body = req.body;
-        const {id} = req.query;
+        const id = req.body._id        
         try {
             const product = await Product.findByIdAndUpdate(id, body)
             res.json({
@@ -116,12 +143,11 @@ export default class ProductController{
     }
     
     async deleteProduct (req, res, next) {
-        const {id} = req.query;
         try {
-            const product = await Product.findByIdAndDelete(id)
+            const product = await Product.findByIdAndDelete(req.params.id)
             res.json({
                 success:true,
-                message: "product Deleted successfully"
+                message: "product Deleted successfully",
             })
         } catch (error) {
             next(error);

@@ -1,0 +1,38 @@
+.dashboard{
+    /* height: 100vh; */
+    width: 100%;
+    display: flex;
+}
+.aside{
+    background-color: #e9edf7;
+    border-top: 1px solid black;
+    height: 100%;
+    width: 20%;
+}
+.dashboard-container{
+    background-color: #fff;
+    border-top: 1px solid black;
+    height: 100%;
+    width: 90%;
+}
+.table{
+    margin-top: 46px;
+}
+.prod-pic{
+    width: 30px;
+    object-fit: cover;
+}
+.actionEdit{
+    border: 0px;
+    outline: 0px;
+    background-color: #ffcc00;
+    color: black;
+    border-radius: 3px;
+}
+.actionDelete{
+    border: 0px;
+    outline: 0px;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 3px;
+}

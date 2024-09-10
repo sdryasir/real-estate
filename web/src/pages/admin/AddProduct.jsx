@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useAddProductMutation } from '../../redux/api/productApi';
 
 const AddProduct = () => {
@@ -12,8 +11,6 @@ const AddProduct = () => {
     const [mainImagePreview, setMainImagePreview] = useState(null); // Preview for the main image
     const [remainingImages, setRemainingImages] = useState([]);
     const [remainingImagesPreviews, setRemainingImagesPreviews] = useState([]); // Previews for remaining images
-
-    const dispatch = useDispatch();
 
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values, resetForm } = useFormik({
         initialValues: {
@@ -30,22 +27,23 @@ const AddProduct = () => {
         }),
         onSubmit: async (values) => {
           // Prepare form data for multipart request
-          const formData = new FormData();
-          formData.append('title', values.title);
-          formData.append('price', values.price);
-          formData.append('quantity', values.quantity);
-          formData.append('description', values.description);
+        //   const formData = new FormData();
+        //   formData.append('title', values.title);
+        //   formData.append('price', values.price);
+        //   formData.append('quantity', values.quantity);
+        //   formData.append('description', values.description);
       
-          if (mainImage) {
-              formData.append('mainImage', mainImage);
-          }
+        //   if (mainImage) {
+        //       formData.append('mainImage', mainImage);
+        //   }
       
-          remainingImages.forEach((image) => {
-              formData.append('remainingImages', image);
-          });
+        //   remainingImages.forEach((image) => {
+        //       formData.append('remainingImages', image);
+        //   });
       
           try {
-              const product = await addProduct(formData).unwrap();
+                
+              const product = await addProduct(values).unwrap();
               console.log(product);
       
               if (product.success) {
@@ -190,7 +188,7 @@ const AddProduct = () => {
                             </div>
                             <div className="col-lg-12 text-center">
                                 <button type="submit" className="site-btn mb-3">Add Product</button> <br />
-                                <Link to={'/'} className='text-primary'>Go Back</Link>
+                                <Link to={'/admin/dashboard'} className='text-primary'>Back to Dashboard</Link>
                             </div>
                         </div>
                     </form>

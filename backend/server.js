@@ -1,11 +1,11 @@
 import express from 'express'
 import 'dotenv/config'
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
 import { v2 as cloudinary } from 'cloudinary';
 import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/user.routes.js'
+import categoryRoutes from './routes/category.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
 import { error } from './middleware/error.js';
@@ -19,11 +19,11 @@ const corsOptions = {
 const app = express()
 connectDB();
 
-cloudinary.config({ 
-    cloud_name: process.env.CLOUD_NAME, 
-    api_key: process.env.CLOUD_API, 
-    api_secret: process.env.CLOUDNIARY_SECRET 
-});
+// cloudinary.config({ 
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+//     api_key: process.env.CLOUDINARY_API_KEY, 
+//     api_secret: process.env.CLOUDINARY_API_SECRET 
+// });
 
 app.use(cors(corsOptions))
 
@@ -36,6 +36,7 @@ app.use(express.urlencoded({limit: '50mb'}));
 app.use('/', productRoutes)
 app.use('/', authRoutes)
 app.use('/', userRoutes)
+app.use('/', categoryRoutes)
 
 app.use('*', (req, res, next)=>{
     res.json({
