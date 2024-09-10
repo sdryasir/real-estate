@@ -5,72 +5,85 @@ import { v2 as cloudinary } from 'cloudinary';
 export default class ProductController{
     
     async createProduct(req, res, next) {
-        const { title, price, quantity, description } = req.body;
+        const {
+            title,
+            price,
+            stock,
+            description,
+            ratings,
+            weight,
+            mainImage,  // Base64 encoded string
+            remainingImages // Array of Base64 encoded strings
+        } = req.body;
 
-        const { mainImage, remainingImages } = req.files;
-        
-    
-        // Debug: Check if files are being received correctly
-        console.log(req.files);
-    
-        if (!mainImage || mainImage.length === 0) {
+        // Check if mainImage is provided
+        if (!mainImage) {
             return res.status(400).json({
                 success: false,
-                message: ['Please provide a main image'],
+                message: 'Please provide a main image',
             });
         }
-        
-    
+
         try {
-            // Upload main image to Cloudinary using the file buffer
+            // Upload main image to Cloudinary and store only the secure URL
             const mainImageResult = await new Promise((resolve, reject) => {
                 cloudinary.uploader.upload_stream(
                     { folder: 'ecommerce-b14/main_images' },
                     (error, result) => {
                         if (error) {
-                            reject(new Error('Error uploading main image'));
+                            reject(error);
+                        } else {
+                            resolve(result.secure_url); // Store only the secure URL
                         }
-                        resolve(result);
                     }
-                ).end(mainImage[0].buffer); // Using buffer instead of path
+                ).end(Buffer.from(mainImage.split(",")[1], 'base64'));
             });
-    
-            // Upload remaining images to Cloudinary using buffers
-            const remainingImageUrls = [];
-            if (remainingImages && remainingImages.length > 0) {
-                for (const file of remainingImages) {
-                    const result = await new Promise((resolve, reject) => {
+
+            // Upload remaining images to Cloudinary and store their secure URLs
+            let remainingImageUrls = [];
+            if (remainingImages && Array.isArray(remainingImages)) {
+                const uploadPromises = remainingImages.map(image => {
+                    return new Promise((resolve, reject) => {
                         cloudinary.uploader.upload_stream(
                             { folder: 'ecommerce-b14/remaining_images' },
                             (error, result) => {
                                 if (error) {
-                                    reject(new Error('Error uploading remaining images'));
+                                    reject(error);
+                                } else {
+                                    resolve(result.secure_url); // Store only the secure URL
                                 }
-                                resolve(result.secure_url);
                             }
-                        ).end(file.buffer); // Using buffer instead of path
+                        ).end(Buffer.from(image.split(",")[1], 'base64'));
                     });
-                    remainingImageUrls.push(result);
-                }
+                });
+
+                remainingImageUrls = await Promise.all(uploadPromises);
             }
-    
-            // Create product in MongoDB with images
+
+            // Create new product and store only URLs
             const product = await Product.create({
                 title,
                 price,
-                quantity,
+                stock,
                 description,
-                mainImage: mainImageResult.secure_url,
-                images: remainingImageUrls,
+                ratings,
+                weight,
+                mainImage: mainImageResult, // Store the main image URL
+                images: remainingImageUrls, // Store remaining images URLs
             });
-    
-            res.json({
+
+            res.status(201).json({
                 success: true,
                 message: 'Product created successfully',
                 product,
             });
         } catch (error) {
-            next(error);
+            console.error('Error creating product:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Server Error',
+                error: error.message,
+            });
         }
     }
     
