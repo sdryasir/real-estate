@@ -2,13 +2,16 @@ import React, {useEffect, useState} from 'react'
 import { FeaturedProductData } from '../Data/FeaturedProduct'
 import { useGetAllProductsQuery } from '../redux/api/productApi'
 import ContentLoader from 'react-content-loader'
+import ReactPaginate from 'react-paginate';
 const FeaturedProduct = () => {
 
+    const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('desc');
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [itemOffset, setItemOffset] = useState(0);
 
-
-    const {data, isLoading, error} = useGetAllProductsQuery()
-
-
+    const {data, isLoading, error} = useGetAllProductsQuery({ search, limit, sort, page})
 
     const [products, setProducts] = useState([])
 
@@ -17,15 +20,29 @@ const FeaturedProduct = () => {
     useEffect(() => {
         if(data){
             setProducts(data.products)
-        }  
-        // console.log(products);
-        
-        
+        } 
+        console.log("---------------", products);
+         
     },[data, products])
 
 
 
     if(isLoading) return <ContentLoader/>
+
+
+    
+    const endOffset = itemOffset + limit;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    const currentItems = data.page;
+    const pageCount = data.pages;
+
+
+    const handlePageClick = (event) => {
+        setPage(page + 1);
+        if(page > pageCount){
+            setPage(page-1)
+        }
+    }
     
 
     return (
@@ -62,6 +79,26 @@ const FeaturedProduct = () => {
                             })
                         }
                     </div>
+                    <ReactPaginate
+                                nextLabel="next"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={3}
+                                marginPagesDisplayed={2}
+                                pageCount={pageCount}
+                                previousLabel="previous"
+                                pageClassName="page-item"
+                                pageLinkClassName="page-link"
+                                previousClassName="page-item"
+                                previousLinkClassName="page-link"
+                                nextClassName="page-item"
+                                nextLinkClassName="page-link"
+                                breakLabel="..."
+                                breakClassName="page-item"
+                                breakLinkClassName="page-link"
+                                containerClassName="pagination"
+                                activeClassName="active"
+                                renderOnZeroPageCount={null}
+                            />
                 </div>
             </section>
         </>

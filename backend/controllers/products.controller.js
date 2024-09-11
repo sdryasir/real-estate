@@ -92,7 +92,8 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
-            const { search, sort, page = 1, limit = 10 } = req.query;
+            const { search, sort, page = 1, limit=10 } = req.query;
+          
 
             // Build query object
             let query = {};

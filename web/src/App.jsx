@@ -27,7 +27,7 @@ const App = () => {
     createRoutesFromElements(
       <Route path='/' element={<Layout/>}>
         <Route path='/' element={<Home/>}/>
-        <Route path='/shop' element={<Shop/>}/>
+        <Route path='/shop/:id' element={<Shop/>}/>
         <Route path='/shop-details' element={<ShopDetails/>}/>
         <Route path='/cart' element={<ShopCart/>}/>
         <Route path='/check-out' element={<Checkout/>}/>

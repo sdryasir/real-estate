@@ -2,6 +2,7 @@ import React from 'react';
 import TinySlider from "tiny-slider-react";
 import 'tiny-slider/dist/tiny-slider.css';
 import { useGetAllCategoryQuery } from '../redux/api/categoryApi';
+import { Link } from 'react-router-dom';
 
 
 const Category = () => {
@@ -24,14 +25,12 @@ const Category = () => {
                   <div className="col-lg-3">
                     <div className="categories__item set-bg" data-setbg={category?.image?.url}>
                       <img src={category?.image?.url}/>
-                      <h5><a href="#">{category.title}</a></h5>
+                      <h5><Link to={`/shop/${category._id}`}>{category.title}</Link></h5>
                     </div>
                   </div>
                 )
               }
 
-              
-             
           </div>
         </div>
       </section>

@@ -4,7 +4,10 @@ import SaleOffCarousel from '../components/SaleOffCarousel'
 import FilterShop from '../components/FilterShop'
 import HeroSection from '../components/HeroSection'
 import BreadcrumbSection from '../components/Breadcrumb'
+import { useParams } from 'react-router-dom'
 const Shop = () => {
+    const {id} = useParams();
+    
   return (
     <>
   <HeroSection/>
@@ -18,7 +21,7 @@ const Shop = () => {
                 <div className="col-lg-9 col-md-7">
                     <div className="product__discount">
                         <div className="section-title product__discount__title">
-                            <h2>Sale Off</h2>
+                            <h2>Sale Off - {id}</h2>
                         </div>
                        <SaleOffCarousel/>
                     </div>
