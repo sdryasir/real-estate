@@ -40,39 +40,39 @@ const productSchema = new Schema({
           user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: true,
+            // required: true,
           },
           rating: {
             type: Number,
-            required: true,
+            // required: true,
           },
           comment: {
             type: String,
-            required: true,
+            // required: true,
           },
         },
       ],
     images: [
         {
           public_id: {
-            type: String,
-            required: true,
+            // type: String,
+            // required: true,
           },
           url: {
             type: String,
-            required: true,
+            // required: true,
           },
         },
       ],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        // required: true,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
-      required: [true, 'Please add a category']
+      // required: [true, 'Please add a category']
   },
 },
 {

@@ -1,6 +1,7 @@
 
 import {Product} from "../models/product.model.js"
 import { v2 as cloudinary } from 'cloudinary';
+import { Category } from "../models/category.model.js";
 
 export default class ProductController{
     
@@ -12,20 +13,40 @@ export default class ProductController{
             description,
             ratings,
             weight,
-            mainImage,  // Base64 encoded string
-            remainingImages // Array of Base64 encoded strings
+            numReviews,
+            category, // Category ID
+            image, // Main image as an array
+            reviews, // Not used here but can be used later
+            user // Not used here but can be used later
         } = req.body;
-
-        // Check if mainImage is provided
-        if (!mainImage) {
+    
+    
+        if (!image || !Array.isArray(image) || image.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: 'Please provide a main image',
             });
         }
-
+    
+   
+        if (!category) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide a category ID',
+            });
+        }
+    
         try {
-            // Upload main image to Cloudinary and store only the secure URL
+       
+            const categoryExists = await Category.findById(category);
+            if (!categoryExists) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid category ID',
+                });
+            }
+    
+        
             const mainImageResult = await new Promise((resolve, reject) => {
                 cloudinary.uploader.upload_stream(
                     { folder: 'ecommerce-b14/main_images' },
@@ -33,34 +54,13 @@ export default class ProductController{
                         if (error) {
                             reject(error);
                         } else {
-                            resolve(result.secure_url); // Store only the secure URL
+                            resolve(result.secure_url); 
                         }
                     }
-                ).end(Buffer.from(mainImage.split(",")[1], 'base64'));
+                ).end(Buffer.from(image[0].url.split(",")[1], 'base64'));
             });
-
-            // Upload remaining images to Cloudinary and store their secure URLs
-            let remainingImageUrls = [];
-            if (remainingImages && Array.isArray(remainingImages)) {
-                const uploadPromises = remainingImages.map(image => {
-                    return new Promise((resolve, reject) => {
-                        cloudinary.uploader.upload_stream(
-                            { folder: 'ecommerce-b14/remaining_images' },
-                            (error, result) => {
-                                if (error) {
-                                    reject(error);
-                                } else {
-                                    resolve(result.secure_url); // Store only the secure URL
-                                }
-                            }
-                        ).end(Buffer.from(image.split(",")[1], 'base64'));
-                    });
-                });
-
-                remainingImageUrls = await Promise.all(uploadPromises);
-            }
-
-            // Create new product and store only URLs
+    
+           
             const product = await Product.create({
                 title,
                 price,
@@ -68,10 +68,12 @@ export default class ProductController{
                 description,
                 ratings,
                 weight,
-                mainImage: mainImageResult, // Store the main image URL
-                images: remainingImageUrls, // Store remaining images URLs
+                numReviews,
+                category, 
+                mainImage: mainImageResult, 
+                images: [], 
             });
-
+    
             res.status(201).json({
                 success: true,
                 message: 'Product created successfully',
@@ -86,6 +88,7 @@ export default class ProductController{
             });
         }
     }
+    
     
     async getAllProducts(req, res, next) {
         try {

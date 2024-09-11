@@ -1,14 +1,26 @@
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useAddProductMutation } from '../../redux/api/productApi';
+import { useGetAllCategoryQuery } from '../../redux/api/categoryApi';
 
 const AddProduct = () => {
-    const [addProduct, { isLoading, error, data }] = useAddProductMutation();
+    const [addProduct, { isLoading, error }] = useAddProductMutation();
     const [apiMessage, setApiMessage] = useState(null);
     const [mainImagePreview, setMainImagePreview] = useState(null);
-    const [remainingImagesPreviews, setRemainingImagesPreviews] = useState([]);
+    const { user } = useSelector(state => state.auth);
+    const { data: categoriesData } = useGetAllCategoryQuery();
+
+    const categories = categoriesData?.category?.map(cat => ({
+        id: cat._id,
+        title: cat.title
+    })) || [];
+
+    const categoryNameToIdMap = categories.reduce((acc, cat) => {
+        acc[cat.title] = cat.id;
+        return acc;
+    }, {});
 
     const formik = useFormik({
         initialValues: {
@@ -17,31 +29,46 @@ const AddProduct = () => {
             stock: '',
             description: '',
             ratings: '',
-            // category: '',
+            category: '', 
             weight: '',
-            // numOfReviews: '',
-            mainImage: '',
-            remainingImages: []
+            numReviews: '',
+            image: [{ public_id: "", url: "" }],
+            reviews: [{ user: "", rating: '', comment: '' }],
+            user: ''
         },
         validationSchema: Yup.object({
             title: Yup.string().min(5, 'Minimum 5 characters').max(50, 'Maximum 50 characters').required('Title is required'),
             price: Yup.number().min(100, 'Minimum price is 100').max(10000, 'Maximum price is 10000').required('Price is required'),
             description: Yup.string().min(10, 'Minimum 10 characters').required('Description is required'),
-            stock: Yup.number().min(1, 'stock must be at least 1').max(100, 'stock not more than 100').required('stock is required'),
+            stock: Yup.number().min(1, 'Stock must be at least 1').max(100, 'Stock not more than 100').required('Stock is required'),
             ratings: Yup.number().min(1, 'Minimum rating is 1').max(5, 'Maximum rating is 5').required('Rating is required'),
-            // category: Yup.string().required('Category is required'),
+            category: Yup.string().required('Category is required'),
             weight: Yup.number().min(1, 'Minimum weight is 1').max(20, 'Maximum weight is 20').required('Weight is required'),
-            // numOfReviews: Yup.number().min(0, 'Minimum number of reviews is 0').required('Number of reviews is required')
+            numReviews: Yup.number().min(0, 'Minimum number of reviews is 0').required('Number of reviews is required')
         }),
         onSubmit: async (values) => {
-            try {
-                const product = await addProduct(values).unwrap();
+      
+            const categoryId = categoryNameToIdMap[values.category];
+            if (!categoryId) {
+                setApiMessage({ success: false, message: 'Invalid category selected' });
+                return;
+            }
 
+            const productData = {
+                ...values,
+                category: categoryId, 
+                user: user._id
+            };
+
+            console.log('hh', productData);
+            
+
+            try {
+                const product = await addProduct(productData).unwrap();
                 if (product.success) {
                     setApiMessage(product);
                     formik.resetForm();
                     setMainImagePreview(null);
-                    setRemainingImagesPreviews([]);
                 } else {
                     setApiMessage({
                         success: false,
@@ -71,15 +98,8 @@ const AddProduct = () => {
     const handleMainImageChange = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertToBase64(file);
-        formik.setFieldValue('mainImage', base64);
+        formik.setFieldValue('image', [{ public_id: "", url: base64 }]);
         setMainImagePreview(URL.createObjectURL(file));
-    };
-
-    const handleRemainingImagesChange = async (e) => {
-        const files = Array.from(e.target.files);
-        const base64Images = await Promise.all(files.map((file) => convertToBase64(file)));
-        formik.setFieldValue('remainingImages', base64Images);
-        setRemainingImagesPreviews(files.map((file) => URL.createObjectURL(file)));
     };
 
     return (
@@ -134,7 +154,7 @@ const AddProduct = () => {
                                     type="number"
                                     name="stock"
                                     value={formik.values.stock}
-                                    placeholder="Enter stock"
+                                    placeholder="Enter Stock Quantity"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                 />
@@ -142,12 +162,12 @@ const AddProduct = () => {
                                     {formik.errors.stock && formik.touched.stock ? formik.errors.stock : null}
                                 </strong>
                             </div>
-                            <div className="col-lg-12 col-md-12">
+                            <div className="col-lg-6 col-md-6">
                                 <textarea
                                     className="mb-3"
                                     name="description"
                                     value={formik.values.description}
-                                    placeholder="Enter Product Description"
+                                    placeholder="Enter Description"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                 />
@@ -169,20 +189,6 @@ const AddProduct = () => {
                                     {formik.errors.ratings && formik.touched.ratings ? formik.errors.ratings : null}
                                 </strong>
                             </div>
-                            {/* <div className="col-lg-6 col-md-6">
-                                <input
-                                    className="mb-3"
-                                    type="text"
-                                    name="category"
-                                    value={formik.values.category}
-                                    placeholder="Enter Category"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
-                                <strong className="text-danger mx-2">
-                                    {formik.errors.category && formik.touched.category ? formik.errors.category : null}
-                                </strong>
-                            </div> */}
                             <div className="col-lg-6 col-md-6">
                                 <input
                                     className="mb-3"
@@ -197,46 +203,48 @@ const AddProduct = () => {
                                     {formik.errors.weight && formik.touched.weight ? formik.errors.weight : null}
                                 </strong>
                             </div>
-                            {/* <div className="col-lg-6 col-md-6">
+                            <div className="col-lg-6 col-md-6">
                                 <input
                                     className="mb-3"
                                     type="number"
-                                    name="numOfReviews"
-                                    value={formik.values.numOfReviews}
+                                    name="numReviews"
+                                    value={formik.values.numReviews}
                                     placeholder="Enter Number of Reviews"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                 />
                                 <strong className="text-danger mx-2">
-                                    {formik.errors.numOfReviews && formik.touched.numOfReviews ? formik.errors.numOfReviews : null}
+                                    {formik.errors.numReviews && formik.touched.numReviews ? formik.errors.numReviews : null}
                                 </strong>
-                            </div> */}
+                            </div>
                             <div className="col-lg-6 col-md-6">
-                                <label>Main Image</label>
+                                <select
+                                    name="category"
+                                    value={formik.values.category}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    className="mb-3"
+                                >
+                                    <option value="">Select Category</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.id} value={cat.title}>
+                                            {cat.title}
+                                        </option>
+                                    ))}
+                                </select>
+                                <strong className="text-danger mx-2">
+                                    {formik.errors.category && formik.touched.category ? formik.errors.category : null}
+                                </strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                                <label>Image</label>
                                 <input
                                     className="mb-3"
                                     type="file"
-                                    name="mainImage"
-                                    accept="image/*"
+                                    name="image"
                                     onChange={handleMainImageChange}
                                 />
                                 {mainImagePreview && <img src={mainImagePreview} alt="Main Image Preview" width="200" />}
-                            </div>
-                            <div className="col-lg-6 col-md-6">
-                                <label>Additional Images (up to 5)</label>
-                                <input
-                                    className="mb-3"
-                                    type="file"
-                                    name="remainingImages"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleRemainingImagesChange}
-                                />
-                                <div className="image-previews">
-                                    {remainingImagesPreviews.map((preview, index) => (
-                                        <img key={index} src={preview} alt={`Remaining Image Preview ${index + 1}`} width="100" />
-                                    ))}
-                                </div>
                             </div>
                             <div className="col-lg-12 text-center">
                                 <button type="submit" className="site-btn mb-3" disabled={isLoading}>
