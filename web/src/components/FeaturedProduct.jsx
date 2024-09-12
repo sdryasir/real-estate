@@ -5,45 +5,48 @@ import ContentLoader from 'react-content-loader'
 import ReactPaginate from 'react-paginate';
 const FeaturedProduct = () => {
 
+    const [products, setProducts] = useState([])
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('desc');
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
-    const [itemOffset, setItemOffset] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+
+    
 
     const {data, isLoading, error} = useGetAllProductsQuery({ search, limit, sort, page})
-
-    const [products, setProducts] = useState([])
-
-
 
     useEffect(() => {
         if(data){
             setProducts(data.products)
-        } 
-        console.log("---------------", products);
-         
-    },[data, products])
+            setTotalPages(data.pages)
+        }          
+        console.log(products);
+        
+    },[data, products, search, sort, page, limit])
 
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        setPage(1); // Reset to first page on search change
+    };
 
+    const handleSortChange = (e) => {
+        setSort(e.target.value);
+        setPage(1); // Reset to first page on sort change
+    };
+
+    const handleLimitChange = (e) => {
+        setLimit(parseInt(e.target.value));
+        setPage(1); // Reset to first page on limit change
+    };
+
+    const handlePageChange = (event) => {
+        setPage(event.selected + 1);
+    };
 
     if(isLoading) return <ContentLoader/>
 
 
-    
-    const endOffset = itemOffset + limit;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    const currentItems = data.page;
-    const pageCount = data.pages;
-
-
-    const handlePageClick = (event) => {
-        setPage(page + 1);
-        if(page > pageCount){
-            setPage(page-1)
-        }
-    }
-    
 
     return (
         <>
@@ -54,7 +57,24 @@ const FeaturedProduct = () => {
                             <div className="section-title">
                                 <h2>Featured Product</h2>
                             </div>
-                            
+                            <input
+                    type="text"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={handleSearchChange}
+                />
+                <select value={sort} onChange={handleSortChange}>
+                    <option value="">Sort By</option>
+                    <option value="title">Title</option>
+                    <option value="-title">Title (Desc)</option>
+                    <option value="price">Price</option>
+                    <option value="-price">Price (Desc)</option>
+                </select>
+                <select value={limit} onChange={handleLimitChange}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                </select>
                         </div>
                     </div>
                     <div className="row featured__filter">
@@ -80,25 +100,16 @@ const FeaturedProduct = () => {
                         }
                     </div>
                     <ReactPaginate
-                                nextLabel="next"
-                                onPageChange={handlePageClick}
-                                pageRangeDisplayed={3}
-                                marginPagesDisplayed={2}
-                                pageCount={pageCount}
-                                previousLabel="previous"
-                                pageClassName="page-item"
-                                pageLinkClassName="page-link"
-                                previousClassName="page-item"
-                                previousLinkClassName="page-link"
-                                nextClassName="page-item"
-                                nextLinkClassName="page-link"
-                                breakLabel="..."
-                                breakClassName="page-item"
-                                breakLinkClassName="page-link"
-                                containerClassName="pagination"
-                                activeClassName="active"
-                                renderOnZeroPageCount={null}
-                            />
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={totalPages}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageChange}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+            />
                 </div>
             </section>
         </>
