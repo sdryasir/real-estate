@@ -19,8 +19,6 @@ const FeaturedProduct = () => {
             setProducts(data.products)
             setTotalPages(data.pages)
         }          
-        console.log(products);
-        
     },[data, products, search, sort, page, limit])
 
     const handleSearchChange = (e) => {

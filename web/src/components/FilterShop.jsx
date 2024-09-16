@@ -62,7 +62,7 @@ const FilterShop = () => {
                             </div>
                             <div className="col-lg-4 col-md-4">
                                 <div className="filter__found">
-                                    <h6><span>{products?.length}</span> Products found</h6>
+                                    <h6><span>{products?.length}</span> Products found on this page</h6>
                                 </div>
                             </div>
                             <div className="col-lg-4 col-md-3">

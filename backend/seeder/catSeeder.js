@@ -3,9 +3,9 @@ import { Category } from '../models/category.model.js';
 import { categories } from './data.js';
 
 const seedCategories = async() => {
-    dropIndex();
+    // dropIndex();
   try {
-    await mongoose.connect('mongodb://127.0.0.1/e-commerce-b14');
+    await mongoose.connect('mongodb+srv://sdryasir:TBKc24olsLKkf2xj@cluster0.1b4wg.mongodb.net/eCommerceDB');
 
     await Category.deleteMany();
     console.log('Category are deleted');
@@ -22,7 +22,7 @@ const seedCategories = async() => {
 
 const dropIndex = ()=>{
     // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1/e-commerce-b14', {
+mongoose.connect('mongodb+srv://sdryasir:TBKc24olsLKkf2xj@cluster0.1b4wg.mongodb.net/eCommerceDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
