@@ -14,7 +14,7 @@ const categorySchema = new Schema({
            type:String,
            required:true
        },
-       url:{
+    url:{
            type:String,
            required:true
        }

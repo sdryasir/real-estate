@@ -26,7 +26,7 @@ export const productApi = createApi({
             }
         }),
         getAllProducts: builder.query({
-            query: (data) => `/products/all?search=${data.search}&limit=${data.limit}&sort=${data.sort}&page=${data.page}`,
+            query: (data) => `/products/all?search=${data.search}&limit=${data.limit}&sort=${data.sort}&page=${data.page}&category=${data.category?data.category:''}`,
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;

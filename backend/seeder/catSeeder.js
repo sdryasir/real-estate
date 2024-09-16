@@ -34,13 +34,11 @@ mongoose.connect('mongodb://127.0.0.1/e-commerce-b14', {
   
     // Drop the index
     try {
-      await db.collection('categories').dropIndex('name_1');
+      await db.collection('categories').dropIndex('slug_1');
       console.log('Index dropped');
     } catch (error) {
       console.error('Error dropping index:', error);
-    } finally {
-      mongoose.connection.close();
-    }
+    } 
   });
 }
 

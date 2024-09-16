@@ -12,8 +12,6 @@ const FeaturedProduct = () => {
     const [limit, setLimit] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
-    
-
     const {data, isLoading, error} = useGetAllProductsQuery({ search, limit, sort, page})
 
     useEffect(() => {
@@ -49,8 +47,7 @@ const FeaturedProduct = () => {
 
 
     return (
-        <>
-            <section className="featured spad">
+        <section className="featured spad">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
@@ -79,7 +76,7 @@ const FeaturedProduct = () => {
                     </div>
                     <div className="row featured__filter">
                         {
-                            products.map((item, idx) => {
+                            products?.map((item, idx) => {
                                 return  <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={idx}>
                                         <div className="featured__item">
                                             <div className="featured__item__pic set-bg" data-setbg={item?.images[0]?.url}>
@@ -100,19 +97,26 @@ const FeaturedProduct = () => {
                         }
                     </div>
                     <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                pageCount={totalPages}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageChange}
-                containerClassName={"pagination"}
-                activeClassName={"active"}
-            />
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName={"pagination"}
+                        activeClassName={"active"}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                    />
                 </div>
             </section>
-        </>
     )
 }
 

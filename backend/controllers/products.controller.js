@@ -2,7 +2,7 @@
 import {Product} from "../models/product.model.js"
 import { v2 as cloudinary } from 'cloudinary';
 import { Category } from "../models/category.model.js";
-
+import mongoose from "mongoose";
 export default class ProductController{
     
     async createProduct(req, res, next) {
@@ -92,24 +92,24 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
-            const { search, sort, page = 1, limit=10 } = req.query;
+            const { search, sort, page = 1, limit=10, category='' } = req.query;
           
-
             // Build query object
             let query = {};
             if (search) {
                 query.title = { $regex: search, $options: 'i' }; // Case-insensitive search
             }
-            
+
+            if(category){
+                query.category = new mongoose.Types.ObjectId(category);
+            }
 
             // Pagination
             const skip = (page - 1) * limit;
-
-            console.log(query);
-            
+         
 
             // Execute query with sorting and pagination
-            const products = await Product.find()
+            const products = await Product.find(query)
                 .sort(sort)
                 .skip(skip)
                 .limit(parseInt(limit));
