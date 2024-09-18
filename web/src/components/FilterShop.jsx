@@ -3,6 +3,7 @@ import { filterData } from '../Data/Filter.data'
 import { useParams } from 'react-router-dom'
 import { useGetAllProductsQuery } from '../redux/api/productApi'
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 const FilterShop = () => {
     const {id} = useParams();
 
@@ -89,7 +90,7 @@ const FilterShop = () => {
                      </ul>
                  </div>
                  <div className="product__item__text">
-                     <h6><a href="#">{item.title}</a></h6>
+                     <h6><Link to={`/product/${item._id}`}>{item.title}</Link></h6>
                      <h5>{item.price}</h5>
                  </div>
              </div>

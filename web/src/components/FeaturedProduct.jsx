@@ -3,6 +3,7 @@ import { FeaturedProductData } from '../Data/FeaturedProduct'
 import { useGetAllProductsQuery } from '../redux/api/productApi'
 import ContentLoader from 'react-content-loader'
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 const FeaturedProduct = () => {
 
     const [products, setProducts] = useState([])
@@ -86,7 +87,7 @@ const FeaturedProduct = () => {
                                                 </ul>
                                             </div>
                                             <div className="featured__item__text">
-                                                <h6><a href="#">{item?.title}</a></h6>
+                                                <h6><Link to={`/product/${item._id}`}>{item?.title}</Link></h6>
                                                 <h5>{item?.price}</h5>
                                             </div>
                                         </div>
