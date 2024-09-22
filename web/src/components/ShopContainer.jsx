@@ -1,9 +1,22 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { incrementQuantity, decrementQuantity, removeItem } from '../redux/features/cartSlice'
 
 const ShopContainer = () => {
+    const {cart} = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+
+    const handleRemove = (item) => {
+        dispatch(removeItem(item));
+    }
+    const handleIncrement = (item) => {
+        dispatch(incrementQuantity(item));
+    }
+    const handleDecrement = (item) => {
+        dispatch(decrementQuantity(item));
+    }
   return (
-    <>
-     <section className="shoping-cart spad">
+    <section className="shoping-cart spad">
         <div className="container">
             <div className="row">
                 <div className="col-lg-12">
@@ -19,72 +32,34 @@ const ShopContainer = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {
+                                    cart?.map((item, index) => <tr key={index}>
                                     <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt=""/>
-                                        <h5>Vegetable’s Package</h5>
+                                        <img style={{width:"100px"}} src={item.images[0].url} alt=""/>
+                                        <h5>{item?.title}</h5>
                                     </td>
                                     <td className="shoping__cart__price">
-                                        $55.00
+                                        {item?.price}
                                     </td>
                                     <td className="shoping__cart__quantity">
+
                                         <div className="quantity">
                                             <div className="pro-qty">
-                                                <input type="text" value="1"/>
+                                                <button onClick={()=>handleDecrement(item)}>-</button>
+                                                <input type="text" value={item?.qty}/>
+                                                <button onClick={()=>handleIncrement(item)}>+</button>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="shoping__cart__total">
-                                        $110.00
+                                        {item?.price * item?.qty}
                                     </td>
                                     <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
+                                        <span className="icon_close" onClick={()=>handleRemove(item)}></span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt=""/>
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="quantity">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt=""/>
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="quantity">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
-                                    </td>
-                                </tr>
+                                )}
+                                
                             </tbody>
                         </table>
                     </div>
@@ -122,7 +97,6 @@ const ShopContainer = () => {
             </div>
         </div>
     </section>
-    </>
   )
 }
 

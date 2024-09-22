@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import { FeaturedProductData } from '../Data/FeaturedProduct'
 import { useGetAllProductsQuery } from '../redux/api/productApi'
 import ContentLoader from 'react-content-loader'
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
+import { addToCart } from '../redux/features/cartSlice';
+import { useDispatch } from 'react-redux';
+
 const FeaturedProduct = () => {
 
     const [products, setProducts] = useState([])
@@ -12,6 +14,7 @@ const FeaturedProduct = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
+    const dispatch = useDispatch();
 
     const {data, isLoading, error} = useGetAllProductsQuery({ search, limit, sort, page})
 
@@ -43,7 +46,10 @@ const FeaturedProduct = () => {
 
     if(isLoading) return <ContentLoader/>
 
-
+    const handleCart = (item) => {
+        item = {...item, qty: 1}
+        dispatch(addToCart(item))
+    }
 
     return (
         <section className="featured spad">
@@ -83,7 +89,7 @@ const FeaturedProduct = () => {
                                                 <ul className="featured__item__pic__hover">
                                                     <li><a href="#"><i className="fa fa-heart"></i></a></li>
                                                     <li><a href="#"><i className="fa fa-retweet"></i></a></li>
-                                                    <li><a href="#"><i className="fa fa-shopping-cart"></i></a></li>
+                                                    <li><button onClick={()=>handleCart(item)}><i className="fa fa-shopping-cart"></i></button></li>
                                                 </ul>
                                             </div>
                                             <div className="featured__item__text">
