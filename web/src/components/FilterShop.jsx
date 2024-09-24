@@ -15,8 +15,6 @@ const FilterShop = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [category, setCategory] = useState('');
 
-    
-
     const {data, isLoading, error} = useGetAllProductsQuery({ search, limit, sort, page, category})
 
     useEffect(() => {

@@ -1,6 +1,20 @@
 import React from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { incrementItem, decrementItem, removeItem } from '../redux/features/cartSlice'
 const ShopContainer = () => {
+    const {cart} = useSelector(state=>state.cart)
+    const dispatch = useDispatch();
+    const handleIncrement = (item)=>{
+        dispatch(incrementItem(item))
+    }
+    const handleDecrement = (item)=>{
+        dispatch(decrementItem(item))
+    }
+    const handleRemove = (item)=>{
+        dispatch(removeItem(item))
+        // console.log("**********", item);
+        
+    }
   return (
     <>
      <section className="shoping-cart spad">
@@ -19,72 +33,34 @@ const ShopContainer = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {
+                                   cart?.map((item, i)=><tr key={i}>
                                     <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt=""/>
-                                        <h5>Vegetable’s Package</h5>
+                                        <img style={{width:'100px'}} src={item.images[0].url} alt=""/>
+                                        <h5>{item?.title}</h5>
                                     </td>
                                     <td className="shoping__cart__price">
-                                        $55.00
+                                        PKR {item?.price}
                                     </td>
                                     <td className="shoping__cart__quantity">
                                         <div className="quantity">
                                             <div className="pro-qty">
-                                                <input type="text" value="1"/>
+                                                <button onClick={()=>handleDecrement(item)}>-</button>
+                                                <input type="text" value={item?.qty}/>
+                                                <button  onClick={()=>handleIncrement(item)}>+</button>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="shoping__cart__total">
-                                        $110.00
+                                        {item?.price * item?.qty}
                                     </td>
                                     <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
+                                        <span onClick={()=>handleRemove(item)} className="icon_close"></span>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt=""/>
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="quantity">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt=""/>
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="quantity">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <span className="icon_close"></span>
-                                    </td>
-                                </tr>
+                                </tr>) 
+                                }
+
+                                
                             </tbody>
                         </table>
                     </div>
@@ -113,8 +89,11 @@ const ShopContainer = () => {
                     <div className="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span>PKR.{cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0)}</span></li>
+                            <li>Shipping Charges <span>{cart.length==0 ? 0 :150}</span></li>
+                            <li>Total <span>PKR.{
+                                cart.length==0? cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0): cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0) + 150
+                                }</span></li>
                         </ul>
                         <a href="#" className="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>

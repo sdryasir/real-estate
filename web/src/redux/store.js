@@ -4,12 +4,14 @@ import { authApi } from './api/authApi'
 import { productApi } from './api/productApi'
 import { categoryApi } from './api/categoryApi'
 import productReducer from './features/productSlice'
+import cartReducer from './features/cartSlice'
 import categoryReducer from './features/categorySlice'
 const store = configureStore({
   reducer: {
     auth:authReducer,
     products:productReducer,
     category:categoryReducer,
+    cart:cartReducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
