@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
-
     const {isAuthenticated} = useSelector(state=>state.auth)
     const [login, {isLoading, error}] = useLoginMutation();
     const dispatch = useDispatch();
@@ -40,8 +39,7 @@ const LoginForm = () => {
         },
     });
     return (
-        <>
-            <div className="contact-form spad">
+        <div className="contact-form spad">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
@@ -69,7 +67,6 @@ const LoginForm = () => {
                     </form>
                 </div>
             </div>
-        </>
     )
 }
 
