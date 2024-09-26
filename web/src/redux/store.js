@@ -3,6 +3,7 @@ import authReducer from './features/authSlice'
 import { authApi } from './api/authApi'
 import { productApi } from './api/productApi'
 import { categoryApi } from './api/categoryApi'
+import { paymentApi } from './api/paymentApi'
 import productReducer from './features/productSlice'
 import cartReducer from './features/cartSlice'
 import categoryReducer from './features/categorySlice'
@@ -15,9 +16,10 @@ const store = configureStore({
     [categoryApi.reducerPath]: categoryApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([productApi.middleware, categoryApi.middleware, authApi.middleware]),
+    getDefaultMiddleware().concat([productApi.middleware, categoryApi.middleware, authApi.middleware, paymentApi.middleware]),
 })
 
 export default store

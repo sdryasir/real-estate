@@ -1,16 +1,33 @@
 import React, {useEffect} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useMakePaymentMutation } from '../redux/api/paymentApi'
+import { loadStripe } from "@stripe/stripe-js"; 
+
 const CheckoutContainer = () => {
     const {cart} = useSelector(state=>state.cart)
     const {isAuthenticated} = useSelector(state=>state.auth)
-    console.log("--------", isAuthenticated);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(!isAuthenticated){
-            return navigate('/login')
-        }
-    })
+    const [makePayment] = useMakePaymentMutation()
+    // useEffect(()=>{
+    //     if(!isAuthenticated){
+    //         return navigate('/login')
+    //     }
+    // })
+
+    const handlePayment = async (cart)=>{
+        const stripe = await loadStripe("pk_test_51JXUPNLs3WLhYCTdb6263j1MdZgKdGAIcneTvUokHLpJl4d5dsVdRQ5AxyIKdnAeI2vA8pPOddH5s5rFkZ2x78ZS008FJnKsVC");
+        const session = await makePayment(cart).unwrap();        
+        const result = stripe.redirectToCheckout({ 
+            sessionId: session.id, 
+        });
+
+        if (result.error) { 
+            console.log("eeeeeeeeeeeeeeee", result.error); 
+        } 
+
+    }
   return (
     <>
     <section className="checkout spad">
@@ -144,6 +161,7 @@ const CheckoutContainer = () => {
                         </div>
                     </div>
                 </form>
+                <button type="button" onClick={()=>handlePayment(cart)} className="site-btn">PLACE ORDER</button>
             </div>
         </div>
     </section>
