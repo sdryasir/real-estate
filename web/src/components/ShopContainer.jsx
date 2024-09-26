@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { incrementItem, decrementItem, removeItem } from '../redux/features/cartSlice'
+import {Link} from 'react-router-dom'
 const ShopContainer = () => {
     const {cart} = useSelector(state=>state.cart)
     const dispatch = useDispatch();
@@ -95,7 +96,7 @@ const ShopContainer = () => {
                                 cart.length==0? cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0): cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0) + 150
                                 }</span></li>
                         </ul>
-                        <a href="#" className="primary-btn">PROCEED TO CHECKOUT</a>
+                        <Link to={'/check-out'} className="primary-btn">PROCEED TO CHECKOUT</Link>
                     </div>
                 </div>
             </div>

@@ -7,14 +7,17 @@ import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/user.routes.js'
 import categoryRoutes from './routes/category.routes.js'
 import authRoutes from './routes/auth.routes.js'
-
+import paymentRoutes from './routes/payment.routes.js'
 import { error } from './middleware/error.js';
 import cors from 'cors'
+
 
 const corsOptions = {
     origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
     credentials:true
 }
+
+
 
 const app = express()
 connectDB();
@@ -37,6 +40,7 @@ app.use('/', productRoutes)
 app.use('/', authRoutes)
 app.use('/', userRoutes)
 app.use('/', categoryRoutes)
+app.use('/', paymentRoutes)
 
 app.use('*', (req, res, next)=>{
     res.json({

@@ -1,6 +1,16 @@
-import React from 'react'
-
+import React, {useEffect} from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 const CheckoutContainer = () => {
+    const {cart} = useSelector(state=>state.cart)
+    const {isAuthenticated} = useSelector(state=>state.auth)
+    console.log("--------", isAuthenticated);
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!isAuthenticated){
+            return navigate('/login')
+        }
+    })
   return (
     <>
     <section className="checkout spad">
@@ -96,12 +106,16 @@ const CheckoutContainer = () => {
                                 <h4>Your Order</h4>
                                 <div className="checkout__order__products">Products <span>Total</span></div>
                                 <ul>
-                                    <li>Vegetable’s Package <span>$75.99</span></li>
-                                    <li>Fresh Vegetable <span>$151.99</span></li>
-                                    <li>Organic Bananas <span>$53.99</span></li>
+                                    {
+                                        cart?.map(item=><li key={item._id}>{item?.title} <span>{item?.price*item?.qty}</span></li>)
+                                    }
+                                    
                                 </ul>
-                                <div className="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                <div className="checkout__order__total">Total <span>$750.99</span></div>
+                                <div className="checkout__order__subtotal">Subtotal <span>PKR.{cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0)}</span></div>
+                                <div className="checkout__order__subtotal">Shipping Charges <span>{cart.length==0 ? 0 :150}</span></div>
+                                <div className="checkout__order__total">Total <span>PKR.{
+                                cart.length==0? cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0): cart.reduce(function(acc, val) { return acc + (val.price * val.qty); }, 0) + 150
+                                }</span></div>
                                 <div className="checkout__input__checkbox">
                                     <label htmlFor="acc-or">
                                         Create an account?
